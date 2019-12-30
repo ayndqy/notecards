@@ -1,0 +1,21 @@
+@font-face {
+	font-family: 'Circe';
+	src: url('Circe-Regular.eot');
+	src: local('Circe'), local('Circe-Regular'),
+		url('Circe-Regular.eot?#iefix') format('embedded-opentype'),
+		url('Circe-Regular.woff') format('woff'),
+		url('Circe-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Circe';
+	src: url('Circe-Bold.eot');
+	src: local('Circe Bold'), local('Circe-Bold'),
+		url('Circe-Bold.eot?#iefix') format('embedded-opentype'),
+		url('Circe-Bold.woff') format('woff'),
+		url('Circe-Bold.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}

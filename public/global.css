@@ -1,0 +1,141 @@
+:root {
+   /* Primary */
+   --primary: #0000ff;
+   --on-primary: #ffffff;
+
+   /* Background */
+   --background: #ffffff;
+   --surface: #fafafb;
+   --contrast: #e2e2ee;
+   --hover: #14141908;
+   --gradient: linear-gradient(0deg, #f9f9fa00 0%, #f9f9facc 40%, #f9f9fa 100%);
+
+   /* Font */
+   --color: #141419;
+   --color-secondary: #64646e;
+
+   /* Scales */
+   --rem-size: 16px;
+   --padding: 1.3125rem;
+   --padding-s: .75rem;
+   
+   /* Typography */
+   --font-family: 'Circe', sans-serif;
+   --font-weidth: 400;
+   --line-height: 1.75rem;
+   --letter-spacing: .075px;
+
+   /* Transitions */
+   --transition: .3s;
+   --animation: .75s;
+}
+
+@media (prefers-color-scheme: dark) { :root {
+   /* Background */
+   --background: #111115;
+   --surface: #141419;
+   --contrast: #1d1d24;
+   --hover: #ffffff08;
+   --gradient: linear-gradient(0deg, #14141900 0%, #141419cc 40%, #141419 100%);
+
+   /* Font */
+   --color: #ffffff;
+   --color-secondary: #7b7b85;
+}}
+
+/* Reset */
+* {
+   margin: 0;
+   padding: 0;
+   -webkit-box-sizing: border-box;
+           box-sizing: border-box;
+   color: inherit;
+   -webkit-tap-highlight-color: transparent;
+   line-height: 1rem;
+   letter-spacing: var(--letter-spacing);
+   -webkit-touch-callout: none;
+   -webkit-user-select: none;
+      -moz-user-select: none;
+       -ms-user-select: none;
+           user-select: none;
+   outline: none;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+}
+
+@media only screen and (min-width: 800px) {
+   ::selection {
+      background: var(--hover);
+   }
+
+   ::-webkit-scrollbar {
+      width: 1rem;
+   }
+
+   ::-webkit-scrollbar-track {
+      background: var(--background); 
+   }
+
+   ::-webkit-scrollbar-thumb {
+      background: var(--contrast); 
+      border-radius: 1rem;
+      border: .25rem solid var(--background);
+   }
+}
+
+html {
+   font-size: var(--rem-size);
+   color: var(--color);
+   background: var(--background);
+}
+
+body {
+   width: 100%;
+   overflow: hidden;
+}
+
+/* Typography */
+* {
+   font-family: var(--font-family);
+   font-size: 1rem;
+   font-weight: var(--font-weidth);
+}
+
+p, .paragraph {
+   line-height: var(--line-height);
+}
+
+h1, h2, h3, h4, h5, h6 {
+   font-weight: bold;
+}
+
+h1, h2 {
+   font-size: 2.4rem;
+   line-height: 3.25rem;
+}
+
+h3, h4 {
+   font-size: 1.6rem;
+   line-height: 2.5rem;
+}
+
+h5, h6 {
+   font-size: 1rem;
+   line-height: 1.5rem;
+}
+
+b, .bold {
+   font-weight: bold;
+}
+
+a {
+   text-decoration: none;
+   color: var(--primary);
+}
+
+/* Layout */
+.block{
+   display: block;
+   width: 100%;
+   padding: var(--padding);
+}
