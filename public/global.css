@@ -61,6 +61,7 @@
    outline: none;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
+   overscroll-behavior: none;
 }
 
 @media only screen and (min-width: 800px) {
