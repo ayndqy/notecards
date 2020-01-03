@@ -1,2 +1,2 @@
 # notecards
-PWA notes
+PWA notes with Svelte
