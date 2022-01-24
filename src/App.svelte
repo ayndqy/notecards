@@ -1,45 +1,25 @@
-<script>
-	import { onMount } from 'svelte';
-	import { cards, contextMenu } from './stores';
-	import { pathparams } from './router/pathname';
-	import { navigate } from './router/navigate';
-	import Route from './router/Route.svelte';
-	import Home from './pages/Home.svelte';
-	import Editor from './pages/Editor.svelte';
-	import Search from './pages/Search.svelte';
-	import Archive from './pages/Archive.svelte';
-	import Settings from './pages/Settings.svelte';
-	import ContextMenu from './components/ContextMenu.svelte';
+<script lang="ts">
+  import { Route, hash } from 'svelte-micro'
+  import { cards } from './cards'
+  import ModalTransition from './components/ModalTransition.svelte'
+  import Home from './pages/Home.svelte'
+  import Editor from './pages/Editor.svelte'
 
-	// Share target action and initial redirect
-	const parsedUrl = new URL(window.location);
-	if(parsedUrl.searchParams.get('text') !== null){
-		window.addEventListener('DOMContentLoaded', () => {
-			$cards = [{id: Date.now(), type: 'text', content: parsedUrl.searchParams.get('text'), state: 'active'}, ...$cards];
-			navigate('/editor?id=' + $cards[0].id);
-		});
-	} else {
-		onMount(() => navigate('/'));
-	}
+  // Remove empty cards
+  $: if ($hash !== '#card') $cards.forEach((card) => card.content === '' && cards.delete(card.id))
 </script>
 
-<!-- Routes -->
-<Route path='/'>
-	<Home />
-</Route>
-<Route path='/editor'>
-	<Editor />
-</Route>
-<Route path='/search'>
-	<Search />
-</Route>
-<Route path='/archive'>
-	<Archive />
-</Route>
-<Route path='/settings'>
-	<Settings />
-</Route>
+<Route>
+  {#if $hash === '#card'}
+    <ModalTransition>
+      <Editor />
+    </ModalTransition>
+  {/if}
 
-{#if $contextMenu.isOpen === true}
-	<ContextMenu />
-{/if}
+  <Route path="/">
+    <Home />
+  </Route>
+
+  <Route path="/settings">TODO</Route>
+  <Route path="/archive">TODO</Route>
+</Route>

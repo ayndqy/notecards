@@ -1,36 +1,40 @@
-<script>
-	export let 	id,
-					zIndex = 100;
-	
-	import { fly } from 'svelte/transition';
-	import { expoOut } from 'svelte/easing';
-</script>
+<header>
+  <div class="container">
+    <div class="left">
+      <slot name="left" />
+    </div>
 
-<header
-  id={id}
-  style='z-index: {zIndex}'
-  in:fly='{{ y: -16, duration: 300, delay: 35, easing: expoOut }}'
-  out:fly='{{ y: -8, duration: 100 }}'>
-	<slot></slot>
+    <div class="center">
+      <slot />
+    </div>
+
+    <div class="right">
+      <slot name="right" />
+    </div>
+  </div>
 </header>
 
 <style>
-	header {
-		display: flex;
-      width: 100%;
-      position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: var(--padding) calc(50vw - 300px + var(--padding) - var(--padding-s));
-		justify-content: space-between;
-		align-items: center;
-      background: var(--gradient);
-	}
+  header {
+    position: sticky;
+    top: 0;
+    padding: 0.75rem 0;
+    z-index: 100;
 
-	@media only screen and (max-width: 700px) {
-      header {
-         padding: var(--padding) calc(4.5vw + var(--padding) - var(--padding-s));
-      }
-	}
+    background: var(--fading);
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .left,
+  .center,
+  .right {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+  }
 </style>

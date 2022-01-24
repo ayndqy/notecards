@@ -1,74 +1,86 @@
-<script>
-	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
-   import { expoOut } from 'svelte/easing';
-	import { cards } from '../stores';
-	import { moveElement } from '../utils/array';
-	import { pathparams } from '../router/pathname';
-   import BackPanel from '../components/BackPanel.svelte';
-	
-	let editor;
+<script lang="ts">
+  import { fade } from 'svelte/transition'
+  import { query } from 'svelte-micro'
+  import autosize from 'autosize'
+  import transitionTime from '../helpers/transitionTime'
+  import { cards } from '../cards'
 
-	// Search card
-	let card = $cards[$cards.indexOf($cards.find(c => c.id === parseInt($pathparams.get('id'))))];
+  import Button from '../components/Button.svelte'
+  import View from '../components/View.svelte'
+  import Header from '../components/Header.svelte'
 
-	// On change save to localStorage
-   $: localStorage.setItem('cards', JSON.stringify($cards));
+  type TextareaInputEvent = Event & { currentTarget: EventTarget & HTMLTextAreaElement }
 
-	// On open editor
-	onMount(() => {
-		editor.focus();
-		$cards = moveElement($cards, $cards.indexOf(card), 0);
-		card.state === 'active' ? null : card.state = 'active';
-	});
+  $: id = Number(new URLSearchParams($query).get('id'))
+  $: index = cards.getIndex($cards, id)
 
-	// Full window height style
-	let fullHeightStyle = 'height:' + (window.innerHeight) + 'px';
-	window.onresize = () => {
-		fullHeightStyle = 'height:' + (window.innerHeight) + 'px';
-	}
+  const deleteAndGoBack = () => {
+    cards.delete(id)
+    history.back()
+  }
+
+  const inputHandler = (event: TextareaInputEvent) => {
+    cards.update(id, (card) => {
+      card.content = event.currentTarget.value
+      return card
+    })
+  }
 </script>
 
-<BackPanel />
-<textarea 
-	class='editor'
-	name='Editor'
-	placeholder='Type here...'
-	style={fullHeightStyle}
-	in:fly='{{ y: 16, delay: 35, duration: 300, easing: expoOut }}'
-	bind:value={card.content}
-	bind:this={editor} />
+<!-- Esc exit -->
+<svelte:window on:keydown={(event) => event.key === 'Escape' && history.back()} />
+
+<View zIndex="1000">
+  <!-- Header -->
+  <Header>
+    <svelte:fragment slot="left">
+      <Button
+        icon="navigate_before"
+        class="transparent without-left-edge"
+        on:click|once={() => history.back()}
+      />
+    </svelte:fragment>
+    <svelte:fragment slot="right">
+      <Button
+        icon="delete"
+        class="transparent without-right-edge"
+        on:click|once={deleteAndGoBack}
+      />
+    </svelte:fragment>
+  </Header>
+
+  <!-- Textarea -->
+  <main class="editor container">
+    {#if $cards[index] !== undefined}
+      <textarea
+        id="editorTextarea"
+        placeholder="Start typing here..."
+        value={$cards[index].content}
+        on:input={inputHandler}
+        use:autosize
+        out:fade={{ delay: transitionTime, duration: 0 }}
+      />
+    {/if}
+  </main>
+</View>
 
 <style>
-	textarea{
-		display: block;
-      width: 100%;
-      height: auto;
-      position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 0 calc(50vw - 300px + var(--padding));
-		padding-top: 90px;
-		padding-bottom: var(--padding);
-      overflow-y: overlay;
-      overflow-x: hidden;
-		border: none;
-		background: var(--background);
-		line-height: var(--line-height);
-		resize: none;
-		-webkit-touch-callout: default;
-		-webkit-user-select: text;
-			-moz-user-select: text;
-			 -ms-user-select: text;
-				  user-select: text;
-	}
+  #editorTextarea {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 1.5rem;
 
-	@media only screen and (max-width: 700px) {
-      textarea{
-         padding: 0 calc(4.5vw + var(--padding));
-			padding-top: 90px;
-			padding-bottom: var(--padding);
-      }
-   }
+    background: transparent;
+    border: none;
+
+    font-size: 1rem;
+    font-family: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    word-spacing: inherit;
+    color: inherit;
+
+    resize: none;
+    overflow: hidden;
+  }
 </style>

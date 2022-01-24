@@ -1,0 +1,9 @@
+{
+  "printWidth": 128,
+  "useTabs": false,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "bracketSpacing": true,
+  "semi": false,
+  "svelteSortOrder": "scripts-markup-styles"
+}
