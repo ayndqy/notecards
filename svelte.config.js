@@ -3,7 +3,7 @@ const autoprefixer = require('autoprefixer')
 const development = process.argv.includes('--dev')
 
 module.exports = {
-  compileOptions: {
+  compilerOptions: {
     dev: development,
     css: false,
   },
