@@ -2,12 +2,9 @@
   export let size: string = '1.5rem'
 </script>
 
-<i
-  class="icon {$$props.class || ''}"
-  style="font-size: {size}; max-width: {size}; {$$props.style || ''}"
->
+<span class="icon {$$props.class || ''}" style="font-size: {size}; max-width: {size}; {$$props.style || ''}">
   <slot />
-</i>
+</span>
 
 <style>
   @font-face {
@@ -19,7 +16,7 @@
     font-display: block;
   }
 
-  i {
+  span {
     display: inline-block;
     vertical-align: -0.45rem;
     color: inherit;

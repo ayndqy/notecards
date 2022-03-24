@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { router, query } from 'svelte-micro'
+  import { router, query, hash } from 'svelte-micro'
   import transitionTime from '../helpers/transitionTime'
   import { cards } from '../cards'
 
@@ -9,6 +9,9 @@
   import View from '../components/View.svelte'
   import Header from '../components/Header.svelte'
   import CardElement from '../components/CardElement.svelte'
+  import Logo from '../components/Logo.svelte'
+
+  let viewElement: HTMLElement
 
   $: filteredCards = [...$cards].filter((card) => card.state === 'active')
   $: activeId = Number(new URLSearchParams($query).get('id'))
@@ -17,19 +20,26 @@
     let id = cards.create('text')
     router.push('/?id=' + id + '#card')
   }
+
+  // Scroll to top on $cards change
+  $: ((_) => {
+    if ($hash === '#card') viewElement?.scrollTo({ top: 0 })
+  })($cards)
 </script>
 
-<View>
+<View bind:element={viewElement}>
   <!-- Header -->
   <Header>
     <svelte:fragment slot="left">
-      <h5>Notecards</h5>
+      <Logo count={$cards.length} />
     </svelte:fragment>
     <svelte:fragment slot="right">
       <Button class="transparent" icon="add" on:click={createAndOpenCard} />
       <Button class="transparent without-right-edge" icon="expand_more" />
     </svelte:fragment>
   </Header>
+
+  <!-- Menu -->
 
   <!-- Card List -->
   <main class="card-list container extended">

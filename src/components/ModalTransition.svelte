@@ -10,14 +10,13 @@
   use:focus={{ enabled: true, preventScroll: true }}
   in:fly={{
     y: window.innerHeight,
-    delay: transitionTime / 4,
+    delay: transitionTime * 0.25,
     duration: transitionTime * 0.75,
     easing: BezierEasing(0.5, 0.9, 0, 1),
-    opacity: 1,
   }}
   out:fly={{
-    y: window.innerHeight / 2,
-    duration: transitionTime / 2,
+    y: window.innerHeight * 0.5,
+    duration: transitionTime * 0.5,
     easing: BezierEasing(1, 0, 0.7, 0.15),
   }}
 >

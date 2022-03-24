@@ -1,27 +1,20 @@
-import { Readable, writable } from 'svelte/store'
+import { type Readable, writable } from 'svelte/store'
 
 export class Card {
   readonly id: number
   readonly type: string
   dateModified: number
-  private _state: string
-  private _tags: string[]
-  private _content: string
+  #state: string
+  #tags: string[]
+  #content: string
 
-  constructor(
-    id: number,
-    type: string,
-    dateModified: number,
-    state: string,
-    tags: string[],
-    content: string
-  ) {
+  constructor(id: number, type: string, dateModified: number, state: string, tags: string[], content: string) {
     this.id = id
     this.type = type
     this.dateModified = dateModified
-    this._state = state
-    this._tags = tags
-    this._content = content
+    this.#state = state
+    this.#tags = tags
+    this.#content = content
   }
 
   toJSON() {
@@ -40,26 +33,26 @@ export class Card {
   }
 
   get state(): string {
-    return this._state
+    return this.#state
   }
   set state(value: string) {
-    this._state = value
+    this.#state = value
     this.modified()
   }
 
   get tags(): string[] {
-    return this._tags
+    return this.#tags
   }
   set tags(value: string[]) {
-    this._tags = value
+    this.#tags = value
     this.modified()
   }
 
   get content(): string {
-    return this._content
+    return this.#content
   }
   set content(value: string) {
-    this._content = value
+    this.#content = value
     this.modified()
   }
 }
@@ -74,14 +67,12 @@ export interface CardStore extends Readable<Card[]> {
 const createCardsStore = (): CardStore => {
   const localStorageKey = 'cards'
 
-  const parseLocalStorage = (storageKey: string): Card[] => {
-    const cardsLocalStorage: string = localStorage.getItem(storageKey)
+  const parseLocalStorage = (storageKey: string, localStorageDefaultValue = '[]'): Card[] => {
+    const localStorageCards: string = localStorage.getItem(storageKey) ?? localStorageDefaultValue
 
-    if (!cardsLocalStorage) localStorage.setItem(storageKey, '[]')
-
-    return JSON.parse(cardsLocalStorage).map((card: Card) => {
-      return new Card(card.id, card.type, card.dateModified, card.state, card.tags, card.content)
-    })
+    return JSON.parse(localStorageCards).map(
+      (card: Card) => new Card(card.id, card.type, card.dateModified, card.state, card.tags, card.content)
+    )
   }
 
   const { subscribe, set, update } = writable(parseLocalStorage(localStorageKey))

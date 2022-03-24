@@ -20,7 +20,7 @@
     "autoprefixer": "^10.4.0"
   },
   "dependencies": {
-    "svelte-micro": "^1.9.0",
+    "svelte-micro": "^1.12.1",
     "bezier-easing": "^2.1.0",
     "autosize": "^5.0.0",
     "focus-svelte": "^0.3.0"

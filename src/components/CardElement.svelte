@@ -7,12 +7,7 @@
   export let active: boolean = false
 </script>
 
-<a
-  class="card-element"
-  href={'/?id=' + card.id + '#card'}
-  class:active
-  in:slide|local={{ delay: transitionTime, duration: 0 }}
->
+<a class="card-element" href={'/?id=' + card.id + '#card'} class:active in:slide|local={{ delay: transitionTime, duration: 0 }}>
   <!-- Card content -->
   <div class="card-content">
     {card.content}
@@ -51,7 +46,7 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
-    white-space: pre-line;
+    white-space: break-spaces;
     overflow: hidden;
   }
   .card-content:empty:before {

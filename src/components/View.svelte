@@ -1,8 +1,9 @@
 <script lang="ts">
   export let zIndex: string = '1'
+  export let element: HTMLElement | null = null
 </script>
 
-<div class="view" style="z-index: {zIndex};">
+<div class="view" style="z-index: {zIndex};" bind:this={element}>
   <slot />
 </div>
 
@@ -13,6 +14,6 @@
     height: 100%;
     height: -webkit-fill-available;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
   }
 </style>

@@ -3,25 +3,23 @@
   import { query } from 'svelte-micro'
   import autosize from 'autosize'
   import transitionTime from '../helpers/transitionTime'
-  import { cards } from '../cards'
+  import { Card, cards } from '../cards'
 
   import Button from '../components/Button.svelte'
   import View from '../components/View.svelte'
   import Header from '../components/Header.svelte'
 
-  type TextareaInputEvent = Event & { currentTarget: EventTarget & HTMLTextAreaElement }
-
   $: id = Number(new URLSearchParams($query).get('id'))
   $: index = cards.getIndex($cards, id)
 
-  const deleteAndGoBack = () => {
+  const deleteAndGoBack = (id: Card['id']) => {
     cards.delete(id)
     history.back()
   }
 
-  const inputHandler = (event: TextareaInputEvent) => {
+  const updateCardContent = (id: Card['id'], content: Card['content']) => {
     cards.update(id, (card) => {
-      card.content = event.currentTarget.value
+      card.content = content
       return card
     })
   }
@@ -34,18 +32,10 @@
   <!-- Header -->
   <Header>
     <svelte:fragment slot="left">
-      <Button
-        icon="navigate_before"
-        class="transparent without-left-edge"
-        on:click|once={() => history.back()}
-      />
+      <Button icon="navigate_before" class="transparent without-left-edge" on:click|once={() => history.back()} />
     </svelte:fragment>
     <svelte:fragment slot="right">
-      <Button
-        icon="delete"
-        class="transparent without-right-edge"
-        on:click|once={deleteAndGoBack}
-      />
+      <Button icon="delete" class="transparent without-right-edge" on:click|once={() => deleteAndGoBack(id)} />
     </svelte:fragment>
   </Header>
 
@@ -56,7 +46,7 @@
         id="editorTextarea"
         placeholder="Start typing here..."
         value={$cards[index].content}
-        on:input={inputHandler}
+        on:input={(event) => updateCardContent(id, event.currentTarget.value)}
         use:autosize
         out:fade={{ delay: transitionTime, duration: 0 }}
       />
