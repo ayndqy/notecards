@@ -2,24 +2,23 @@
   import { focus } from 'focus-svelte'
   import { fly } from 'svelte/transition'
   import BezierEasing from 'bezier-easing'
-  import transitionTime from '../helpers/transitionTime'
-</script>
+  import { transitionTime } from '../helpers/transitionTime'
 
-<div
-  class="modal-transition"
-  use:focus={{ enabled: true, preventScroll: true }}
-  in:fly={{
+  const inFly = {
     y: window.innerHeight,
-    delay: transitionTime * 0.25,
-    duration: transitionTime * 0.75,
-    easing: BezierEasing(0.5, 0.9, 0, 1),
-  }}
-  out:fly={{
+    duration: transitionTime * 1,
+    easing: BezierEasing(0.375, 0.95, 0, 1),
+    opacity: 0,
+  }
+
+  const outFly = {
     y: window.innerHeight * 0.5,
     duration: transitionTime * 0.5,
     easing: BezierEasing(1, 0, 0.7, 0.15),
-  }}
->
+  }
+</script>
+
+<div class="modal-transition" use:focus={{ enabled: true, preventScroll: true }} in:fly={inFly} out:fly={outFly}>
   <slot />
 </div>
 

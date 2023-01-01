@@ -6,7 +6,7 @@
   import Editor from './pages/Editor.svelte'
 
   // Remove empty cards
-  $: if ($hash !== '#card') $cards.forEach((card) => card.content === '' && cards.delete(card.id))
+  $: if ($hash !== '#card') $cards.forEach((card) => card.content === '' && cards.remove(card.id))
 </script>
 
 <Route>

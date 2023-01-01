@@ -61,21 +61,22 @@ export interface CardStore extends Readable<Card[]> {
   getIndex(cards: Card[], id: Card['id']): number
   create(type: Card['type']): number
   update(id: Card['id'], updater: (card: Card) => Card): void
-  delete(id: Card['id']): void
+  remove(id: Card['id']): void
 }
 
 const createCardsStore = (): CardStore => {
   const localStorageKey = 'cards'
 
-  const parseLocalStorage = (storageKey: string, localStorageDefaultValue = '[]'): Card[] => {
-    const localStorageCards: string = localStorage.getItem(storageKey) ?? localStorageDefaultValue
+  const parseLocalStorage = (storageKey: string, fallbackValue = '[]'): Card[] => {
+    const localStorageCards: string = localStorage.getItem(storageKey) ?? fallbackValue
 
-    return JSON.parse(localStorageCards).map(
-      (card: Card) => new Card(card.id, card.type, card.dateModified, card.state, card.tags, card.content)
-    )
+    return JSON.parse(localStorageCards).map((card: Card) => {
+      return new Card(card.id, card.type, card.dateModified, card.state, card.tags, card.content)
+    })
   }
 
-  const { subscribe, set, update } = writable(parseLocalStorage(localStorageKey))
+  const { subscribe, update } = writable(parseLocalStorage(localStorageKey))
+
   subscribe((cards) => localStorage.setItem(localStorageKey, JSON.stringify(cards)))
 
   return {
@@ -104,7 +105,7 @@ const createCardsStore = (): CardStore => {
       })
     },
 
-    delete: (id: Card['id'] = -1): void => {
+    remove: (id: Card['id'] = -1): void => {
       update((cards) => cards.filter((card: Card) => card.id !== id))
     },
   }

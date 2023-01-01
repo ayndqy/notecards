@@ -1,4 +1,4 @@
-const downloadFile = (name: string, content: string) => {
+export const downloadFile = (name: string, content: string) => {
   let element = document.createElement('a')
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content))
   element.setAttribute('download', name)
@@ -7,5 +7,3 @@ const downloadFile = (name: string, content: string) => {
   element.click()
   document.body.removeChild(element)
 }
-
-export default downloadFile

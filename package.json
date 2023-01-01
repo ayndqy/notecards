@@ -1,28 +1,28 @@
 {
   "name": "notecards",
-  "version": "2.0.0",
+  "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "node esbuild --dev",
-    "build": "node esbuild",
-    "start": "npx derver --production --port=5000 public"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "^4.5.0",
-    "tslib": "^2.3.0",
+    "@sveltejs/vite-plugin-svelte": "^2.0.0",
     "@tsconfig/svelte": "^3.0.0",
-    "esbuild": "^0.14.0",
-    "esbuild-svelte": "^0.6.0",
-    "svelte": "^3.49.0",
-    "svelte-preprocess": "^4.10.0",
-    "derver": "^0.5.0",
-    "postcss": "^8.4.0",
-    "autoprefixer": "^10.4.0"
+    "@types/autosize": "^4.0.1",
+    "svelte": "^3.55.0",
+    "svelte-check": "^3.0.0",
+    "svelte-preprocess": "^5.0.0",
+    "tslib": "^2.4.0",
+    "typescript": "^4.9.0",
+    "vite": "^4.0.0"
   },
   "dependencies": {
-    "svelte-micro": "^1.12.1",
-    "bezier-easing": "^2.1.0",
     "autosize": "^5.0.0",
-    "focus-svelte": "^0.3.0"
+    "bezier-easing": "^2.1.0",
+    "focus-svelte": "^0.3.0",
+    "svelte-micro": "^2.0.1"
   }
 }

@@ -1,13 +1,20 @@
 <script lang="ts">
-  import type { Card } from '../cards'
   import { slide } from 'svelte/transition'
-  import transitionTime from '../helpers/transitionTime'
+  import { linkHandle } from 'svelte-micro'
+  import type { Card } from '../cards'
+  import { transitionTime } from '../helpers/transitionTime'
 
   export let card: Card
   export let active: boolean = false
 </script>
 
-<a class="card-element" href={'/?id=' + card.id + '#card'} class:active in:slide|local={{ delay: transitionTime, duration: 0 }}>
+<a
+  use:linkHandle
+  class="card-element"
+  href={'/?id=' + card.id + '#card'}
+  class:active
+  in:slide|local={{ delay: transitionTime, duration: 0 }}
+>
   <!-- Card content -->
   <div class="card-content">
     {card.content}

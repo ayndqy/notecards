@@ -12,7 +12,7 @@
 
   --fading: linear-gradient(0deg, #ffffff00 0%, #ffffffcc 40%, #ffffff 100%);
 
-  --transition-time: 0.35s;
+  --transition-time: 0.325s;
 }
 @media (prefers-color-scheme: dark) {
   :root {

@@ -1,6 +1,14 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
-
-  "include": ["src/**/*"],
-  "exclude": ["node_modules/*", "public/*"]
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "target": "esnext",
+    "module": "esnext",
+    "types": ["svelte", "node"],
+    "useDefineForClassFields": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "include": ["src/**/*"]
 }

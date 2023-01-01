@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { router, query, hash } from 'svelte-micro'
-  import transitionTime from '../helpers/transitionTime'
+  import { transitionTime } from '../helpers/transitionTime'
   import { cards } from '../cards'
 
   import Icon from '../components/Icon.svelte'
@@ -21,10 +21,12 @@
     router.push('/?id=' + id + '#card')
   }
 
-  // Scroll to top on $cards change
-  $: ((_) => {
+  const scrollToTop = (): void => {
     if ($hash === '#card') viewElement?.scrollTo({ top: 0 })
-  })($cards)
+  }
+
+  // Scroll to top on $cards change
+  $: ((_) => scrollToTop())($cards)
 </script>
 
 <View bind:element={viewElement}>

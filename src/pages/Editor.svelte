@@ -1,8 +1,8 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { query } from 'svelte-micro'
-  import autosize from 'autosize'
-  import transitionTime from '../helpers/transitionTime'
+  import { query, router } from 'svelte-micro'
+  import { transitionTime } from '../helpers/transitionTime'
+  import { autoSize } from '../helpers/autoSize'
   import { Card, cards } from '../cards'
 
   import Button from '../components/Button.svelte'
@@ -13,8 +13,8 @@
   $: index = cards.getIndex($cards, id)
 
   const deleteAndGoBack = (id: Card['id']) => {
-    cards.delete(id)
-    history.back()
+    cards.remove(id)
+    router.go(-1)
   }
 
   const updateCardContent = (id: Card['id'], content: Card['content']) => {
@@ -26,13 +26,13 @@
 </script>
 
 <!-- Esc exit -->
-<svelte:window on:keydown={(event) => event.key === 'Escape' && history.back()} />
+<svelte:window on:keydown={(event) => event.key === 'Escape' && router.go(-1)} />
 
 <View zIndex="1000">
   <!-- Header -->
   <Header>
     <svelte:fragment slot="left">
-      <Button icon="navigate_before" class="transparent without-left-edge" on:click|once={() => history.back()} />
+      <Button icon="navigate_before" class="transparent without-left-edge" on:click|once={() => router.go(-1)} />
     </svelte:fragment>
     <svelte:fragment slot="right">
       <Button icon="delete" class="transparent without-right-edge" on:click|once={() => deleteAndGoBack(id)} />
@@ -47,7 +47,7 @@
         placeholder="Start typing here..."
         value={$cards[index].content}
         on:input={(event) => updateCardContent(id, event.currentTarget.value)}
-        use:autosize
+        use:autoSize
         out:fade={{ delay: transitionTime, duration: 0 }}
       />
     {/if}

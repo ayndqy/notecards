@@ -1,17 +1,5 @@
-const sveltePreprocess = require('svelte-preprocess')
-const autoprefixer = require('autoprefixer')
-const development = process.argv.includes('--dev')
+import sveltePreprocess from 'svelte-preprocess'
 
-module.exports = {
-  compilerOptions: {
-    dev: development,
-    css: false,
-  },
-
-  preprocess: sveltePreprocess({
-    sourceMap: development,
-    postcss: {
-      plugins: [autoprefixer()],
-    },
-  }),
+export default {
+  preprocess: sveltePreprocess(),
 }

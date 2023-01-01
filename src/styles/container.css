@@ -1,26 +1,11 @@
 .container {
-  --container-width: 560px;
+  --width: 560px;
+  --padding: 1.5rem;
+
   width: 100%;
-  padding-left: calc(50% - var(--container-width) / 2 + 1.5rem);
-  padding-right: calc(50% - var(--container-width) / 2 + 1.5rem);
-  -webkit-box-sizing: border-box;
+  padding: 0 max(var(--padding), calc(50% - var(--width) / 2));
   box-sizing: border-box;
 }
 .container.extended {
-  padding-left: calc(50% - var(--container-width) / 2);
-  padding-right: calc(50% - var(--container-width) / 2);
-}
-/* max-width should be equal to the --container-width */
-@media screen and (max-width: 560px) {
-  .container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-  .container.extended {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .container.limiter {
-    padding: 0;
-  }
+  padding: 0 calc(50% - var(--width) / 2 - var(--padding));
 }
